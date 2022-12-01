@@ -22,11 +22,13 @@ public class Sieve {
   static BitSet sieve(int limit) {
     var limitRoot = (int) Math.sqrt(limit);
     var candidates = new BitSet(limit + 1);
-    candidates.set(2, limit + 1);
-    for (int prime = candidates.nextSetBit(0); prime <= limitRoot;
-        prime = candidates.nextSetBit(prime + 1)) {
-      for (int multiple = prime * prime; multiple <= limit; multiple += prime) {
-        candidates.clear(multiple);
+    if (limit >= 2) {
+      candidates.set(2, limit + 1);
+      for (int prime = candidates.nextSetBit(0); prime <= limitRoot;
+          prime = candidates.nextSetBit(prime + 1)) {
+        for (int multiple = prime * prime; multiple <= limit; multiple += prime) {
+          candidates.clear(multiple);
+        }
       }
     }
     return candidates;
