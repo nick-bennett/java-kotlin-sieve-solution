@@ -1,6 +1,6 @@
 # Java-Kotlin Sieve Solution
 
-This project implements example solutions in Java and Kotlin to a classic problem, the Sieve of Eratosthenes.
+This project implements example solutions in Java and Kotlin to the classic Sieve of Eratosthenes.
 
 &copy; 2022 Nicholas Bennett.
 
