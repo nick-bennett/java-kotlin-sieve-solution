@@ -45,3 +45,30 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+tasks.register('runJavaArray', JavaExec) {
+    mainClass.set("com.nickbenn.sieve.array.Sieve")
+}
+
+tasks.register('runJavaBitSet', JavaExec) {
+    mainClass.set("com.nickbenn.sieve.bitset.Sieve")
+}
+
+tasks.register('runKotlinArray', JavaExec) {
+    mainClass.set("com.nickbenn.sieve.array.SieveKt")
+}
+
+tasks.register('runKotlinBitSet', JavaExec) {
+    mainClass.set("com.nickbenn.sieve.bitset.SieveKt")
+}
+
+tasks.withType(JavaExec).configureEach {
+    javaLauncher.set(javaToolchains.launcherFor(java.toolchain))
+    classpath sourceSets.main.runtimeClasspath
+    group = "run"
+}
+
+tasks.register('runAll') {
+    dependsOn tasks.withType(JavaExec)
+    group = "run"
+}

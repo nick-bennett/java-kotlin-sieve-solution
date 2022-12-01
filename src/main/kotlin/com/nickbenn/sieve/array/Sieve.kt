@@ -13,21 +13,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.nickbenn.sieve.bitset
+package com.nickbenn.sieve.array
 
-import java.util.BitSet
 import kotlin.math.sqrt
 
-internal fun sieve(limit: Int): BitSet {
+internal fun sieve(limit: Int): List<Int> {
     val limitRoot = sqrt(limit.toDouble()).toInt()
-    val primes = BitSet(limit + 1)
-    primes.set(2, limit + 1)
-    var prime = 2
-    while (prime <= limitRoot) {
-        for (multiple in (prime * prime)..limit step prime) {
-            primes.clear(multiple)
+    val primes = mutableListOf<Int>()
+    if (limit >= 2) {
+        val candidates = BooleanArray(2) { false } + BooleanArray(limit - 1) { true }
+        for (factor in 2..limitRoot) {
+            if (candidates[factor]) {
+                primes.add(factor)
+                for (multiple in (factor * factor)..limit step factor) {
+                    candidates[multiple] = false
+                }
+            }
         }
-        prime = primes.nextSetBit(prime + 1)
+        for (i in (limitRoot + 1)..limit) {
+            if (candidates[i]) {
+                primes.add(i)
+            }
+        }
     }
     return primes
 }
@@ -37,10 +44,10 @@ fun main() {
     val upperBound = 10_000_000
     val primes = sieve(upperBound)
     val end = System.currentTimeMillis()
-    print(
-            """
-            Kotlin Sieve with BitSet: 
-            ${primes.cardinality()} primes found between ${primes.nextSetBit(0)} and ${primes.previousSetBit(primes.size() - 1)} (inclusive) in ${end - start} ms.
+    println(
+        """
+            Kotlin Sieve with BooleanArray and List<Int>: 
+            ${primes.size} primes found between ${primes.first()} and ${primes.last()} (inclusive) in ${end - start} ms.
         """.trimIndent()
     )
 }
