@@ -25,10 +25,10 @@ class SieveKtTest {
 
     @ParameterizedTest(name = "[{index}] limit={0}, count={1}, min={2}, max={3}")
     @CsvFileSource(resources = ["/sieve-cases.csv"], numLinesToSkip = 1)
-    fun sieve(limit: Int, count: Int, min: Int, max: Int) {
+    fun sieve(limit: Int, count: Int, min: Int?, max: Int?) {
         val actual = sieve(limit)
         assertEquals(count, actual.cardinality())
-        if (actual.cardinality() > 0) {
+        if (!actual.isEmpty) {
             assertEquals(min, actual.nextSetBit(0))
             assertEquals(max, actual.previousSetBit(actual.size() - 1))
         }

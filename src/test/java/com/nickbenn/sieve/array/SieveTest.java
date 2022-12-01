@@ -11,7 +11,7 @@ class SieveTest {
 
   @ParameterizedTest(name = "[{index}] limit={0}, count={1}, min={2}, max={3}")
   @CsvFileSource(resources = "/sieve-cases.csv", numLinesToSkip = 1)
-  void sieve(int limit, int count, int min, int max) {
+  void sieve(int limit, int count, Integer min, Integer max) {
     var actual = Sieve.sieve(limit);
     assertEquals(count, actual.size());
     if (actual.size() > 0) {
