@@ -18,7 +18,7 @@ package com.nickbenn.sieve.bitset
 import java.util.BitSet
 import kotlin.math.sqrt
 
-fun sieve(limit: Int): BitSet {
+internal fun sieve(limit: Int): BitSet {
     val limitRoot = sqrt(limit.toDouble()).toInt()
     val primes = BitSet(limit + 1)
     primes.set(2, limit + 1)
@@ -38,7 +38,7 @@ fun main() {
     val primes = sieve(upperBound)
     val end = System.currentTimeMillis()
     print(
-        """
+            """
             Kotlin Sieve with BitSet: 
             ${primes.cardinality()} primes found between ${primes.nextSetBit(0)} and ${primes.previousSetBit(primes.size() - 1)} (inclusive) in ${end - start} ms.
         """.trimIndent()

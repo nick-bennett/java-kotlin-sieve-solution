@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.nickbenn.sieve;
+package com.nickbenn.sieve.bitset;
 
 import java.util.BitSet;
 
@@ -23,7 +23,8 @@ public class Sieve {
     var limitRoot = (int) Math.sqrt(limit);
     var candidates = new BitSet(limit + 1);
     candidates.set(2, limit + 1);
-    for (int prime = candidates.nextSetBit(0); prime <= limitRoot; prime = candidates.nextSetBit(prime + 1)) {
+    for (int prime = candidates.nextSetBit(0); prime <= limitRoot;
+        prime = candidates.nextSetBit(prime + 1)) {
       for (int multiple = prime * prime; multiple <= limit; multiple += prime) {
         candidates.clear(multiple);
       }

@@ -24,14 +24,15 @@ internal fun sieve(limit: Int): List<Int> {
         val candidates = BooleanArray(2) { false } + BooleanArray(limit - 1) { true }
         for (factor in 2..limitRoot) {
             if (candidates[factor]) {
+                primes.add(factor)
                 for (multiple in (factor * factor)..limit step factor) {
                     candidates[multiple] = false
                 }
             }
         }
-        candidates.forEachIndexed { number, isPrime ->
-            if (isPrime) {
-                primes.add(number)
+        for (i in (limitRoot + 1)..limit) {
+            if (candidates[i]) {
+                primes.add(i)
             }
         }
     }
@@ -44,7 +45,7 @@ fun main() {
     val primes = sieve(upperBound)
     val end = System.currentTimeMillis()
     print(
-        """
+            """
             Kotlin Sieve with BooleanArray and List<Int>: 
             ${primes.size} primes found between ${primes.first()} and ${primes.last()} (inclusive) in ${end - start} ms.
         """.trimIndent()
